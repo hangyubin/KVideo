@@ -15,10 +15,13 @@ import { BackToTop } from "@/components/ui/BackToTop";
 import { ScrollPositionManager } from "@/components/ScrollPositionManager";
 import { LocaleProvider } from "@/components/LocaleProvider";
 import { RuntimeFeaturesProvider } from "@/components/RuntimeFeaturesProvider";
+import { VideoTogetherController } from '@/components/VideoTogetherController';
 import { getRuntimeFeatures } from "@/lib/server/runtime-features";
 import fs from 'fs';
 import path from 'path';
 
+const DEFAULT_VIDEOTOGETHER_SCRIPT_URL =
+  'https://fastly.jsdelivr.net/gh/VideoTogether/VideoTogether@latest/release/extension.website.user.js';
 
 // Server Component specifically for reading env/file (async for best practices)
 async function AdKeywordsWrapper() {
@@ -83,6 +86,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const runtimeFeatures = getRuntimeFeatures();
+  const videoTogetherScriptUrl =
+    process.env.VIDEOTOGETHER_SCRIPT_URL?.trim() || DEFAULT_VIDEOTOGETHER_SCRIPT_URL;
+  const videoTogetherSettingUrl = process.env.VIDEOTOGETHER_SETTING_URL?.trim();
+  const videoTogetherEnvEnabled = process.env.VIDEOTOGETHER_ENABLED !== 'false';
 
   return (
     <html lang="zh-CN" suppressHydrationWarning>
@@ -105,6 +112,11 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <RuntimeFeaturesProvider initialFeatures={runtimeFeatures}>
+            <VideoTogetherController
+              envEnabled={videoTogetherEnvEnabled}
+              scriptUrl={videoTogetherScriptUrl}
+              settingUrl={videoTogetherSettingUrl}
+            />
             {/* 加入自动同步组件，它会在后台默默工作，我们放在 ThemeProvider 内部的最前面 */}
             <AutoSync />
             <LocaleProvider />

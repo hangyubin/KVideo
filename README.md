@@ -478,11 +478,11 @@ docker run -d -p 3000:3000 \
 
 ## 一起看 (VideoTogether) 配置
 
-播放器页面和 IPTV 页面默认内置 [VideoTogether](https://videotogether.github.io/zh-cn/guide/website.html) 官方网页集成脚本，进入播放页后即可直接使用一起看功能。
+播放器页面和 IPTV 页面支持集成 [VideoTogether](https://videotogether.github.io/zh-cn/guide/website.html) 官方网页脚本。应用内默认关闭，用户可在设置页手动开启；开启后仅在播放器和 IPTV 页面显示，并默认折叠为小图标。
 
 | 变量名 | 说明 | 默认值 |
 |--------|------|--------|
-| `VIDEOTOGETHER_ENABLED` | 设为 `false` 时禁用一起看集成 | `true` |
+| `VIDEOTOGETHER_ENABLED` | 设为 `false` 时彻底禁用一起看集成（即使用户在设置页开启也不会加载） | `true` |
 | `VIDEOTOGETHER_SCRIPT_URL` | 自定义 VideoTogether 脚本地址，适合自托管或替换 CDN | `https://fastly.jsdelivr.net/gh/VideoTogether/VideoTogether@latest/release/extension.website.user.js` |
 | `VIDEOTOGETHER_SETTING_URL` | 自定义 VideoTogether 设置页地址，对应官方 `window.videoTogetherWebsiteSettingUrl` 接口 | - |
 
@@ -639,7 +639,7 @@ docker run -e PORT=8080 -p 8080:8080 --name kvideo kuekhaoyang/kvideo:latest
 | `AD_KEYWORDS` / `NEXT_PUBLIC_AD_KEYWORDS` | 广告过滤关键词 | - |
 | `AD_KEYWORDS_FILE` | 广告关键词文件路径 | - |
 | `DANMAKU_API_URL` / `NEXT_PUBLIC_DANMAKU_API_URL` | 弹幕聚合 API 地址 | - |
-| `VIDEOTOGETHER_ENABLED` | 是否启用 VideoTogether 一起看集成（`false` 时关闭） | `true` |
+| `VIDEOTOGETHER_ENABLED` | 是否允许 VideoTogether 一起看集成（`false` 时关闭） | `true` |
 | `VIDEOTOGETHER_SCRIPT_URL` | VideoTogether 脚本地址 | `https://fastly.jsdelivr.net/gh/VideoTogether/VideoTogether@latest/release/extension.website.user.js` |
 | `VIDEOTOGETHER_SETTING_URL` | VideoTogether 设置页地址 | - |
 | `UPSTASH_REDIS_REST_URL` | Upstash Redis REST URL（跨设备同步：配置、历史、收藏） | - |
